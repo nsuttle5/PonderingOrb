@@ -188,11 +188,12 @@ function updateMusicToggle() {
 }
 
 function startMusic() {
-  if (!music.paused || !fartSound.paused) return;
+  if (!music || !music.paused || (fartSound && !fartSound.paused)) return;
   music.play().then(updateMusicToggle).catch(updateMusicToggle);
 }
 
 function playFartSound() {
+  if (!fartSound || !music) return false;
   if (Math.random() >= 0.04) return false;
 
   resumeMusicAfterFart = resumeMusicAfterFart || !music.paused;
@@ -283,8 +284,8 @@ function resetTarotSpread() {
 
 if (musicToggle && music) {
   musicToggle.addEventListener("click", () => {
-    if (!fartSound.paused) return;
-  if (music.paused) {
+    if (fartSound && !fartSound.paused) return;
+    if (music.paused) {
       music.play().then(updateMusicToggle).catch(updateMusicToggle);
     } else {
       music.pause();
