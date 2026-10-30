@@ -38,6 +38,8 @@ const hint   = document.getElementById("hint");
 const live   = document.getElementById("live");
 const types  = document.getElementById("types");
 const video  = document.getElementById("loop");
+const music  = document.getElementById("background-music");
+const musicToggle = document.getElementById("music-toggle");
 
 let category = "classic";
 let last = null;
@@ -94,8 +96,29 @@ function close() {
   hit.setAttribute("aria-label", "Ask the ball");
 }
 
+function updateMusicToggle() {
+  const isPlaying = !music.paused;
+  musicToggle.textContent = isPlaying ? "Pause music" : "Play music";
+  musicToggle.setAttribute("aria-pressed", String(isPlaying));
+}
+
+function startMusic() {
+  if (!music.paused) return;
+  music.play().then(updateMusicToggle).catch(updateMusicToggle);
+}
+
+musicToggle.addEventListener("click", () => {
+  if (music.paused) {
+    music.play().then(updateMusicToggle).catch(updateMusicToggle);
+  } else {
+    music.pause();
+    updateMusicToggle();
+  }
+});
+
 hit.addEventListener("click", () => {
   if (busy) return;
+  startMusic();
   busy = true;
   setTimeout(() => (busy = false), 1100);   // lets each animation finish
   frame.classList.contains("is-open") ? close() : open();
@@ -104,6 +127,9 @@ hit.addEventListener("click", () => {
 
 // The loop should never stop; nudge it if the browser pauses it
 video.play().catch(() => {});
+startMusic();
+document.addEventListener("pointerdown", startMusic, { once: true });
+document.addEventListener("keydown", startMusic, { once: true });
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) video.play().catch(() => {});
 });

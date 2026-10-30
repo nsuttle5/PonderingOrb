@@ -12,6 +12,8 @@
 <body>
   <canvas id="stars" aria-hidden="true"></canvas>
   <main>
+    <audio id="background-music" src="Wizard_Tower_Theme.mp3"
+           loop preload="auto" autoplay></audio>
     <div class="frame" id="frame">
       <div class="stage">
         <video id="loop" src="eightball.mp4" poster="poster.jpg"
@@ -28,6 +30,9 @@
     <fieldset class="types" id="types">
       <legend class="sr">Answer type</legend>
     </fieldset>
+
+    <button class="music-toggle" id="music-toggle" type="button"
+            aria-pressed="true">Play music</button>
 
     <p class="sr" id="live" aria-live="polite"></p>
   </main>

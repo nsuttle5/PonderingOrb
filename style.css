@@ -221,6 +221,28 @@ video {
 .choice[aria-pressed="true"] { color: var(--ink); }
 .choice[aria-pressed="true"]::before { opacity: 0.9; transform: none; }
 
+.music-toggle {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid rgba(185, 172, 245, 0.35);
+  border-radius: 999px;
+  background: rgba(5, 4, 16, 0.35);
+  color: rgba(185, 172, 245, 0.75);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  transition: border-color 250ms, color 250ms, background 250ms;
+  -webkit-tap-highlight-color: transparent;
+}
+.music-toggle:hover {
+  border-color: rgba(185, 172, 245, 0.75);
+  color: var(--ink);
+  background: rgba(107, 79, 168, 0.2);
+}
+.music-toggle:focus-visible {
+  outline: 1px solid var(--lavender);
+  outline-offset: 3px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .choice::before { transition: none; }
   :root { --zoom: 1; }
