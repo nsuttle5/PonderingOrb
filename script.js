@@ -76,6 +76,7 @@ const tarotPrev = document.getElementById("tarot-prev");
 const tarotNext = document.getElementById("tarot-next");
 const tarotPageLabel = document.getElementById("tarot-page");
 const fartSound = document.getElementById("fart-sound");
+const flipSound = document.getElementById("flip-sound");
 
 let category = "classic";
 let last = null;
@@ -90,6 +91,12 @@ const usedAnswers = Object.fromEntries(
 
 const TAROT_PAGE_SIZE = 3;
 let resumeMusicAfterFart = false;
+
+function playTarotFlipSound() {
+  if (!flipSound) return;
+  flipSound.currentTime = 0.45;
+  flipSound.play().catch(() => {});
+}
 
 // Build the category buttons
 if (types) {
@@ -250,6 +257,7 @@ function renderTarot() {
 
     button.addEventListener("click", () => {
       if (tarotState[index].revealed) return;
+      playTarotFlipSound();
       tarotState[index].revealed = true;
       renderTarot();
     });
