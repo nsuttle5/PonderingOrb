@@ -1,0 +1,210 @@
+:root {
+  --bg: #050410;
+  --ink: #ece7ff;
+  --lavender: #b9acf5;
+  --violet: #6b4fa8;
+
+  /* Where the glowing orb sits inside the 1080x1080 video (tweak if you re-render) */
+  --orb-x: 50.5%;
+  --orb-y: 47.2%;
+  --window-size: 29%;   /* diameter of the dark circle, relative to the frame */
+  --zoom: 1.75;         /* how far the camera pushes in */
+
+  --size: min(94vw, 66svh, 760px);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(ellipse 40% 65% at 0% 55%, rgba(60, 34, 130, 0.16), transparent 70%),
+    radial-gradient(ellipse 40% 65% at 100% 45%, rgba(30, 48, 130, 0.16), transparent 70%),
+    radial-gradient(ellipse at 50% 38%, #120d26 0%, #0a0818 50%, var(--bg) 100%);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: "Instrument Sans", system-ui, sans-serif;
+}
+
+#stars {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 0;
+}
+
+.sr {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0; padding: 0; margin: -1px;
+}
+
+/* ---------- The ball ---------- */
+
+.frame {
+  position: relative;
+  width: var(--size);
+  aspect-ratio: 1;
+  overflow: hidden;
+  container-type: inline-size;
+  /* feathers the video's edges into the page background */
+  -webkit-mask-image: radial-gradient(circle, #000 58%, transparent 74%);
+          mask-image: radial-gradient(circle, #000 58%, transparent 74%);
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  transform-origin: var(--orb-x) var(--orb-y);
+  /* closing: wait for the text to leave, then ease back out */
+  transition: transform 850ms cubic-bezier(0.55, 0.05, 0.35, 1) 300ms;
+}
+.frame.is-open .stage {
+  /* opening: fast start, long soft landing */
+  transition: transform 1000ms cubic-bezier(0.16, 0.84, 0.24, 1);
+  transform: scale(var(--zoom));
+}
+
+video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 50%;
+}
+.hit:focus-visible {
+  outline: 2px solid var(--lavender);
+  outline-offset: -18%;
+}
+
+/* ---------- The dark window ---------- */
+
+.window {
+  position: absolute;
+  left: var(--orb-x);
+  top: var(--orb-y);
+  width: var(--window-size);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle, rgba(4, 2, 10, 0.78) 0%, rgba(4, 2, 10, 0.86) 100%);
+  box-shadow: inset 0 0 6cqw rgba(0, 0, 0, 0.7), 0 0 3cqw rgba(107, 79, 168, 0.35);
+  backdrop-filter: blur(1.5px);
+  scale: 0.35;
+  opacity: 0;
+  pointer-events: none;
+  /* closing: after the text fades, shrink away */
+  transition: scale 380ms cubic-bezier(0.5, 0, 0.75, 0) 120ms,
+              opacity 300ms ease 160ms;
+}
+.frame.is-open .window {
+  scale: 1;
+  opacity: 1;
+  /* opening: appears once the zoom is mostly done, with a slight overshoot */
+  transition: scale 750ms cubic-bezier(0.2, 1.35, 0.4, 1) 550ms,
+              opacity 400ms ease 550ms;
+}
+
+.answer {
+  margin: 0;
+  width: 78%;
+  text-align: center;
+  text-wrap: balance;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.05;
+  color: var(--ink);
+  text-shadow: 0 0 1.4cqw rgba(185, 172, 245, 0.7);
+  font-size: 3.4cqw;
+  opacity: 0;
+  filter: blur(6px);
+  transition: opacity 180ms ease, filter 180ms ease;
+}
+.answer[data-size="short"] { font-size: 7cqw; }
+.answer[data-size="long"]  { font-size: 2.8cqw; }
+.answer[data-size="num"]   { font-size: 11cqw; line-height: 1; }
+
+.frame.is-open .answer {
+  opacity: 1;
+  filter: blur(0);
+  transition: opacity 650ms ease 1050ms, filter 650ms ease 1050ms;
+}
+
+/* ---------- Controls ---------- */
+
+.hint {
+  margin: 0;
+  min-height: 1.4em;
+  font-size: 0.95rem;
+  color: var(--lavender);
+  opacity: 0.85;
+}
+
+.types {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  max-width: 92vw;
+}
+
+.chip {
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--lavender);
+  background: transparent;
+  border: 1px solid rgba(185, 172, 245, 0.35);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+  transition: background 160ms, color 160ms, border-color 160ms;
+}
+.chip:hover { border-color: var(--lavender); }
+.chip[aria-pressed="true"] {
+  background: var(--lavender);
+  border-color: var(--lavender);
+  color: #17102b;
+}
+.chip:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --zoom: 1; }
+  .stage, .frame.is-open .stage { transition: none; }
+  .window, .frame.is-open .window { transition: opacity 200ms ease; scale: 1; }
+  .answer, .frame.is-open .answer { transition: opacity 200ms ease; filter: none; }
+  .frame.is-open .window, .frame.is-open .answer { transition-delay: 0s; }
+}

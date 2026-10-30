@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Magic Eight Ball</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <main>
+    <div class="frame" id="frame">
+      <div class="stage">
+        <video id="loop" src="eightball.mp4" poster="poster.jpg"
+               autoplay loop muted playsinline preload="auto" aria-hidden="true"></video>
+        <div class="window" aria-hidden="true">
+          <p class="answer" id="answer"></p>
+        </div>
+      </div>
+      <button class="hit" id="hit" type="button" aria-label="Ask the ball"></button>
+    </div>
+
+    <p class="hint" id="hint">Press the ball to ask</p>
+
+    <fieldset class="types" id="types">
+      <legend class="sr">Answer type</legend>
+    </fieldset>
+
+    <p class="sr" id="live" aria-live="polite"></p>
+  </main>
+  <script src="stars.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
