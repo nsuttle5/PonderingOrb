@@ -78,6 +78,11 @@ let busy = false;
 let tarotState = [];
 let tarotPage = 0;
 
+// Tracks used answers separately for each category
+const usedAnswers = Object.fromEntries(
+  Object.keys(CATEGORIES).map(key => [key, new Set()])
+);
+
 const TAROT_PAGE_SIZE = 3;
 
 // Build the category buttons
@@ -99,13 +104,30 @@ if (types) {
 
 function pick() {
   const pool = CATEGORIES[category].answers;
-  let result;
-  let tries = 0;
-  do {
-    const item = pool[Math.floor(Math.random() * pool.length)];
-    result = typeof item === "function" ? item() : item;
-    tries++;
-  } while (result === last && tries < 8); // avoid repeating the last answer
+  const used = usedAnswers[category];
+
+  // Reset only when every answer has been used
+  if (used.size >= pool.length) {
+    used.clear();
+  }
+
+  // Get answers that haven't been used yet
+  const remaining = pool
+    .map((item, index) => ({ item, index }))
+    .filter(({ index }) => !used.has(index));
+
+  // Randomly select one unused answer
+  const choice = remaining[
+    Math.floor(Math.random() * remaining.length)
+  ];
+
+  // Mark it as used
+  used.add(choice.index);
+
+  const result = typeof choice.item === "function"
+    ? choice.item()
+    : choice.item;
+
   last = result;
   return result;
 }
