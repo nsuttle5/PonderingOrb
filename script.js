@@ -15,16 +15,20 @@ const CATEGORIES = {
       "You are NOT beating the allegations", "The timeline is not looking good", "I am literally a ball", "I wasn't programmed for this", "I'll answer after we talk about your search history",
       "I know what you are", "Your aura speaks louder than your words", "I saw your future. I can't unsee", "This is canon",
       "Yes, I get whatcha mean~ *wink*", "Mods, twist their balls", "I'm pooping myself (yes)", "-farts cutely- \n(yes)",
-      "Aiden Maxwell", "I see great mpreg in you",
+      "Aiden Maxwell", "I see great mpreg in you", "-farts un-cutely- \n(no)", "I see feet pics in your future", "Give me 5 bucks and I'll do whatever you want",
+      "You've run out of tokens", "The person to your left is madly in love with you", "The person to your right is a skin walker", "Kill. The. King.",
+      "You think that's happening? Ha!", "Your future is red", "Don't fall asleep tonight"
     ],
   },
   number: {
     label: "Number",
-    answers: ["0", "1", "2", "5", "7", "67", "ONE MILLION",], // change the range here
+    answers: ["0", "1", "2", "5", "7", "67", "ONE MILLION", "-4", "17", "420", "Infinite", "DNE", ".001", "Good luck", "I didn't know it was possible to get that much"], // change the range here
   },
   when: {
     label: "When",
-    answers: ["When the stars align (they're busy)", "When you touch grass", "Before GTA VII", "When bro gets a job", "kkjgfkjkjgfdhkjfdkjgfdkjfds", "Next month", "Someday", "Never"],
+    answers: ["When the stars align (they're busy)", "When you touch grass", "Before GTA VII", "When bro gets a job", "kkjgfkjkjgfdhkjfdkjgfdkjfds", "Next month", "Someday", "Never"
+      , "Don't count on it sonion", "In the next minute", "Right. Now.", "Ask Joseph"
+    ],
   },
 };
 
@@ -79,6 +83,11 @@ let busy = false;
 let tarotState = [];
 let tarotPage = 0;
 
+// Tracks used answers separately for each category
+const usedAnswers = Object.fromEntries(
+  Object.keys(CATEGORIES).map(key => [key, new Set()])
+);
+
 const TAROT_PAGE_SIZE = 3;
 let resumeMusicAfterFart = false;
 
@@ -101,13 +110,30 @@ if (types) {
 
 function pick() {
   const pool = CATEGORIES[category].answers;
-  let result;
-  let tries = 0;
-  do {
-    const item = pool[Math.floor(Math.random() * pool.length)];
-    result = typeof item === "function" ? item() : item;
-    tries++;
-  } while (result === last && tries < 8); // avoid repeating the last answer
+  const used = usedAnswers[category];
+
+  // Reset only when every answer has been used
+  if (used.size >= pool.length) {
+    used.clear();
+  }
+
+  // Get answers that haven't been used yet
+  const remaining = pool
+    .map((item, index) => ({ item, index }))
+    .filter(({ index }) => !used.has(index));
+
+  // Randomly select one unused answer
+  const choice = remaining[
+    Math.floor(Math.random() * remaining.length)
+  ];
+
+  // Mark it as used
+  used.add(choice.index);
+
+  const result = typeof choice.item === "function"
+    ? choice.item()
+    : choice.item;
+
   last = result;
   return result;
 }
