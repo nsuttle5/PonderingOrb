@@ -8,31 +8,23 @@
 const randInt = (min, max) => String(Math.floor(Math.random() * (max - min + 1)) + min);
 
 const CATEGORIES = {
-  yesno: {
-    label: "Yes / No",
-    answers: ["Yes", "No", "Definitely", "Absolutely not", "Without a doubt", "Not a chance", "Yes, go for it", "No, wait"],
-  },
   classic: {
     label: "Classic",
     answers: [
-      "It is certain", "It is decidedly so", "Without a doubt", "Yes, definitely", "You may rely on it",
-      "As I see it, yes", "Most likely", "Outlook good", "Yes", "Signs point to yes",
-      "Reply hazy, try again", "Ask again later", "Better not tell you now", "Cannot predict now",
-      "Concentrate and ask again", "Don't count on it", "My reply is no", "My sources say no",
-      "Outlook not so good", "Very doubtful",
+      "It is giving yes", "Nah, you're cooked", "Not in this economy", "Chat, is this real?", "Delulu is not the solulu",
+      "You are NOT beating the allegations", "The timeline is not looking good", "I am literally a ball", "I wasn't programmed for this", "I'll answer after we talk about your search history",
+      "I know what you are", "Your aura speaks louder than your words", "I saw your future. I can't unsee", "This is canon",
+      "Yes, I get whatcha mean~ *wink*", "Mods, twist their balls", "I'm pooping myself (yes)", "-farts cutely- \n(yes)",
+      "Aiden Maxwell", "I see great mpreg in you",
     ],
   },
   number: {
     label: "Number",
-    answers: [() => randInt(1, 10)], // change the range here
-  },
-  direction: {
-    label: "Direction",
-    answers: ["North", "South", "East", "West", "Left", "Right", "Straight ahead", "Turn back"],
+    answers: ["0", "1", "2", "5", "7", "67", "ONE MILLION",], // change the range here
   },
   when: {
     label: "When",
-    answers: ["Right now", "Today", "Tonight", "Tomorrow", "This week", "Next month", "Someday", "Never"],
+    answers: ["When the stars align (they're busy)", "When you touch grass", "Before GTA VII", "When bro gets a job", "kkjgfkjkjgfdhkjfdkjgfdkjfds", "Next month", "Someday", "Never"],
   },
 };
 
