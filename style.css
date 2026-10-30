@@ -1,7 +1,9 @@
 html,
 body {
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 :root {
@@ -53,7 +55,8 @@ main {
   gap: 0.9rem;
   padding: 1rem 0.6rem;
   width: 100%;
-  height: 100svh;
+  min-height: 100svh;
+  height: auto;
 }
 
 .mode-switch {
@@ -66,6 +69,8 @@ main {
 
 .page-switch {
   display: inline-flex;
+  flex: 0 0 auto;
+  min-height: 2.4rem;
   border: 1px solid rgba(185, 172, 245, 0.35);
   border-radius: 999px;
   background: rgba(5, 4, 16, 0.45);
@@ -73,6 +78,8 @@ main {
 }
 
 .page-link {
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
   color: rgba(236, 231, 255, 0.7);
   padding: 0.5rem 1rem;
@@ -328,6 +335,9 @@ video {
 
 .tarot-panel {
   gap: 1rem;
+  max-height: none;
+  min-height: 1000px;
+  padding: 0 0.3rem 0.5rem;
 }
 
 .tarot-header {
@@ -387,7 +397,9 @@ video {
 }
 
 .tarot-deck {
-  width: min(94vw, 1000px);
+  min-width: 800px;
+  flex: 0 0 auto;
+  min-height: 500px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.85rem;
@@ -396,10 +408,10 @@ video {
 .tarot-card {
   border: 0;
   background: none;
-  perspective: 1400px;
   padding: 0;
   cursor: pointer;
-  min-height: clamp(260px, 44svh, 350px);
+  height: 100%;
+  min-height: 0;
 }
 
 .tarot-card:focus-visible {
@@ -412,7 +424,6 @@ video {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: clamp(260px, 44svh, 350px);
   border-radius: 14px;
   transform-style: preserve-3d;
   transition: transform 850ms cubic-bezier(0.16, 0.9, 0.2, 1.02);
@@ -455,22 +466,26 @@ video {
   background: linear-gradient(180deg, rgba(22, 16, 54, 0.97) 0%, rgba(10, 8, 24, 0.98) 100%);
   border: 1px solid rgba(185, 172, 245, 0.35);
   display: grid;
-  grid-template-rows: 58% 42%;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: 0;
 }
 
 .tarot-image-wrap {
   position: relative;
+  min-height: 0;
   height: 100%;
   background: rgba(0, 0, 0, 0.28);
   display: grid;
   place-items: center;
-  padding: 0.2rem;
+  padding: 0.1rem;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(185, 172, 245, 0.35);
 }
 
 .tarot-image {
-  width: 100%;
+  width: auto;
   height: 100%;
-  object-fit: contain;
+  max-width: 100%;
   display: block;
 }
 
@@ -479,10 +494,16 @@ video {
 }
 
 .tarot-front-content {
+  min-height: 0;
   padding: 0.52rem 0.58rem;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 0.3rem;
-  overflow: auto;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+  background: rgba(10, 8, 24, 0.98);
 }
 
 .tarot-name {
@@ -507,6 +528,7 @@ video {
   margin: 0;
   font-size: clamp(0.72rem, 1.1vw, 0.8rem);
   line-height: 1.25;
+  text-align: center;
   color: rgba(236, 231, 255, 0.9);
 }
 
@@ -528,16 +550,16 @@ video {
     max-height: calc(100svh - 170px);
   }
 
+  .tarot-panel {
+    height: auto;
+    max-height: none;
+  }
+
   .tarot-deck {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .tarot-card,
-  .tarot-card-inner {
-    min-height: clamp(220px, 34svh, 280px);
-  }
-
   .tarot-front {
-    grid-template-rows: 54% 46%;
+    grid-template-rows: minmax(0, 1fr) auto;
   }
 }

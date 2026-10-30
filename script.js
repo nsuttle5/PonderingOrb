@@ -160,7 +160,7 @@ function startMusic() {
 }
 
 function playFartSound() {
-  if (Math.random() >= 0.03) return false;
+  if (Math.random() >= 0.05) return false;
 
   resumeMusicAfterFart = resumeMusicAfterFart || !music.paused;
   music.pause();
