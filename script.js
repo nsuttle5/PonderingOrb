@@ -15,12 +15,14 @@ const CATEGORIES = {
       "You are NOT beating the allegations", "The timeline is not looking good", "I am literally a ball", "I wasn't programmed for this", "I'll answer after we talk about your search history",
       "I know what you are", "Your aura speaks louder than your words", "I saw your future. I can't unsee", "This is canon",
       "Yes, I get whatcha mean~ *wink*", "Mods, twist their balls", "I'm pooping myself (yes)", "-farts cutely- \n(yes)",
-      "Aiden Maxwell", "I see great mpreg in you",
+      "Aiden Maxwell", "I see great mpreg in you", "-farts un-cutely- \n(no)", "I see feet pics in your future", "Give me 5 bucks and I'll do whatever you want",
+      "You've run out of tokens", "The person to your left is madly in love with you", "The person to your right is a skin walker", "Kill. The. King.",
+      "You think that's happening? Ha!", "Your future is red", "Don't fall asleep tonight"
     ],
   },
   number: {
     label: "Number",
-    answers: ["0", "1", "2", "5", "7", "67", "ONE MILLION",], // change the range here
+    answers: ["0", "1", "2", "5", "7", "67", "ONE MILLION", "-4", "17", "420", "Infinite", "DNE", ".001", "Good luck", "I didn't know it was possible to get that much"], // change the range here
   },
   when: {
     label: "When",
