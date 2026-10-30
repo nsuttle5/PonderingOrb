@@ -332,5 +332,6 @@ if (tarotDeck) {
 }
 
 startMusic();
+window.addEventListener("load", startMusic, { once: true });
 document.addEventListener("pointerdown", startMusic, { once: true });
 document.addEventListener("keydown", startMusic, { once: true });
