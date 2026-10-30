@@ -55,13 +55,13 @@ let busy = false;
 for (const [key, { label }] of Object.entries(CATEGORIES)) {
   const b = document.createElement("button");
   b.type = "button";
-  b.className = "chip";
+  b.className = "choice";
   b.textContent = label;
   b.dataset.key = key;
   b.setAttribute("aria-pressed", String(key === category));
   b.addEventListener("click", () => {
     category = key;
-    types.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
+    types.querySelectorAll(".choice").forEach((c) => c.setAttribute("aria-pressed", String(c === b)));
   });
   types.appendChild(b);
 }
