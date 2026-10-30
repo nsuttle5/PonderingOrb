@@ -26,7 +26,9 @@ const CATEGORIES = {
   },
   when: {
     label: "When",
-    answers: ["When the stars align (they're busy)", "When you touch grass", "Before GTA VII", "When bro gets a job", "kkjgfkjkjgfdhkjfdkjgfdkjfds", "Next month", "Someday", "Never"],
+    answers: ["When the stars align (they're busy)", "When you touch grass", "Before GTA VII", "When bro gets a job", "kkjgfkjkjgfdhkjfdkjgfdkjfds", "Next month", "Someday", "Never"
+      , "Don't count on it sonion", "In the next minute", "Right. Now.", "Ask Joseph"
+    ],
   },
 };
 
