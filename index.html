@@ -14,23 +14,30 @@
   <main>
     <audio id="background-music" src="Wizard_Tower_Theme.mp3"
            loop preload="auto" autoplay></audio>
-    <audio id="fart-sound" src="fart_sound.wav" preload="auto"></audio>
+    <nav class="page-switch" aria-label="Pages">
+      <a class="page-link is-active" href="index.html" aria-current="page">Crystal Ball</a>
+      <a class="page-link" href="tarot.html">Tarot Reading</a>
+    </nav>
+
+    <section class="mode-panel" id="orb-panel">
+      <audio id="fart-sound" src="fart_sound.wav" preload="auto"></audio>
     <div class="frame" id="frame">
-      <div class="stage">
-        <video id="loop" src="eightball.mp4" poster="poster.jpg"
-               autoplay loop muted playsinline preload="auto" aria-hidden="true"></video>
-        <div class="window" aria-hidden="true">
-          <p class="answer" id="answer"></p>
+        <div class="stage">
+          <video id="loop" src="eightball.mp4" poster="poster.jpg"
+                 autoplay loop muted playsinline preload="auto" aria-hidden="true"></video>
+          <div class="window" aria-hidden="true">
+            <p class="answer" id="answer"></p>
+          </div>
         </div>
+        <button class="hit" id="hit" type="button" aria-label="Ask the ball"></button>
       </div>
-      <button class="hit" id="hit" type="button" aria-label="Ask the ball"></button>
-    </div>
 
-    <p class="hint" id="hint">Press the ball to ask</p>
+      <p class="hint" id="hint">Press the ball to ask</p>
 
-    <fieldset class="types" id="types">
-      <legend class="sr">Answer type</legend>
-    </fieldset>
+      <fieldset class="types" id="types">
+        <legend class="sr">Answer type</legend>
+      </fieldset>
+    </section>
 
     <button class="music-toggle" id="music-toggle" type="button"
             aria-pressed="true">Play music</button>

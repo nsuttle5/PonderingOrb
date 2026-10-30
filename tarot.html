@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tarot Reading</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <main>
+    <audio id="background-music" src="Wizard_Tower_Theme.mp3"
+           loop preload="auto" autoplay></audio>
+
+    <nav class="page-switch" aria-label="Pages">
+      <a class="page-link" href="index.html">Crystal Ball</a>
+      <a class="page-link is-active" href="tarot.html" aria-current="page">Tarot Reading</a>
+    </nav>
+
+    <section class="mode-panel tarot-panel" id="tarot-panel">
+      <div class="tarot-header">
+        <h2>Tarot Reading</h2>
+        <p>Click each card to reveal it. Cards may appear upright or reversed.</p>
+      </div>
+
+      <div class="tarot-controls">
+        <button class="tarot-btn" id="shuffle-tarot" type="button">Shuffle &amp; New Spread</button>
+        <button class="tarot-btn" id="reset-tarot" type="button">Turn All Face Down</button>
+        <button class="tarot-btn" id="tarot-prev" type="button">Previous</button>
+        <span class="tarot-page" id="tarot-page" aria-live="polite">Page 1 / 1</span>
+        <button class="tarot-btn" id="tarot-next" type="button">Next</button>
+      </div>
+
+      <div class="tarot-deck" id="tarot-deck" aria-live="polite"></div>
+    </section>
+
+    <button class="music-toggle" id="music-toggle" type="button"
+            aria-pressed="true">Play music</button>
+
+    <p class="sr" id="live" aria-live="polite"></p>
+  </main>
+  <script src="stars.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
