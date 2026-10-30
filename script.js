@@ -40,10 +40,12 @@ const types  = document.getElementById("types");
 const video  = document.getElementById("loop");
 const music  = document.getElementById("background-music");
 const musicToggle = document.getElementById("music-toggle");
+const fartSound = document.getElementById("fart-sound");
 
 let category = "classic";
 let last = null;
 let busy = false;
+let resumeMusicAfterFart = false;
 
 // Build the category buttons
 for (const [key, { label }] of Object.entries(CATEGORIES)) {
@@ -103,11 +105,31 @@ function updateMusicToggle() {
 }
 
 function startMusic() {
-  if (!music.paused) return;
+  if (!music.paused || !fartSound.paused) return;
   music.play().then(updateMusicToggle).catch(updateMusicToggle);
 }
 
+function playFartSound() {
+  if (Math.random() >= 0.03) return false;
+
+  resumeMusicAfterFart = resumeMusicAfterFart || !music.paused;
+  music.pause();
+  fartSound.currentTime = 0;
+
+  const resumeAfterFart = () => {
+    fartSound.onended = null;
+    const shouldResume = resumeMusicAfterFart;
+    resumeMusicAfterFart = false;
+    if (shouldResume) startMusic();
+  };
+  fartSound.onended = resumeAfterFart;
+  fartSound.play().catch(resumeAfterFart);
+  updateMusicToggle();
+  return true;
+}
+
 musicToggle.addEventListener("click", () => {
+  if (!fartSound.paused) return;
   if (music.paused) {
     music.play().then(updateMusicToggle).catch(updateMusicToggle);
   } else {
@@ -118,7 +140,7 @@ musicToggle.addEventListener("click", () => {
 
 hit.addEventListener("click", () => {
   if (busy) return;
-  startMusic();
+  if (!playFartSound()) startMusic();
   busy = true;
   setTimeout(() => (busy = false), 1100);   // lets each animation finish
   frame.classList.contains("is-open") ? close() : open();
